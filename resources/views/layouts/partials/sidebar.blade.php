@@ -256,19 +256,19 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ url('/laporan/transport') }}" class="nav-link {{ request()->is('laporan/transport*') ? 'active' : '' }}">
+                            <a href="{{ url('/transport') }}" class="nav-link {{ request()->is('laporan/transport*') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Laporan Transport</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/laporan/inventory') }}" class="nav-link {{ request()->is('laporan/inventory*') ? 'active' : '' }}">
+                            <a href="{{ url('/inventory') }}" class="nav-link {{ request()->is('laporan/inventory*') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Laporan Inventory</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/laporan/kontrak') }}" class="nav-link {{ request()->is('laporan/kontrak*') ? 'active' : '' }}">
+                            <a href="{{ url('/kontrak') }}" class="nav-link {{ request()->is('laporan/kontrak*') ? 'active' : '' }}">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Laporan Kontrak</p>
                             </a>
