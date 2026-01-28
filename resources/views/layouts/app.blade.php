@@ -31,6 +31,52 @@
             transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
         }
         
+        /* Sidebar Custom Styles */
+        .app-sidebar {
+            background-color: #ffffff !important;
+            border-right: 1px solid #e9ecef;
+        }
+        
+        .sidebar-menu .nav-link {
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            color: #495057;
+            border-radius: 0.5rem;
+            margin: 0.2rem 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-menu .nav-link:hover {
+            background-color: #f8f9fa;
+            color: #667eea;
+            transform: translateX(5px);
+        }
+        
+        .sidebar-menu .nav-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+        
+        .sidebar-menu .nav-link.active .nav-icon {
+            color: #ffffff !important;
+        }
+        
+        .sidebar-menu .nav-icon {
+            font-size: 1.1rem;
+            width: 1.6rem;
+            margin-right: 0.5rem;
+        }
+        
+        .nav-treeview .nav-link {
+            padding-left: 2.5rem;
+            font-size: 0.85rem;
+        }
+        
+        .nav-treeview .nav-link:hover {
+            background-color: #f1f3f5;
+        }
+        
         /* Content area */
         .app-content {
             padding: 1rem;
@@ -92,17 +138,6 @@
             min-height: 80px;
         }
         
-        /* Sidebar improvements */
-        .sidebar-menu .nav-link {
-            padding: 0.6rem 1rem;
-            font-size: 0.9rem;
-        }
-        
-        .sidebar-menu .nav-icon {
-            font-size: 1.1rem;
-            width: 1.6rem;
-        }
-        
         /* Badge in navbar */
         .navbar-badge {
             font-size: 0.6rem;
@@ -156,6 +191,10 @@
             
             /* Hide text on small screens, show only icons */
             .nav-link .d-lg-inline {
+                display: none !important;
+            }
+            
+            .navbar-brand-wrapper {
                 display: none !important;
             }
         }

@@ -1,5 +1,10 @@
 <nav class="app-header navbar navbar-expand bg-body">
     <div class="container-fluid">
+        <!-- Logo Kiri -->
+        <div class="navbar-brand-wrapper d-flex align-items-center me-3">
+            <img src="{{ asset('images/SCM.jpeg') }}" alt="Logo Left" class="brand-image" style="height: 40px; width: auto; max-height: 50px;">
+        </div>
+
         <!-- Left navbar links -->
         <ul class="navbar-nav">
             <li class="nav-item">
@@ -62,5 +67,10 @@
                 </ul>
             </li>
         </ul>
+
+        <!-- Logo Kanan -->
+        <div class="navbar-brand-wrapper d-flex align-items-center ms-3">
+            <img src="{{ asset('images/MBM.jpeg') }}" alt="Logo Right" class="brand-image" style="height: 40px; width: auto; max-height: 50px;">
+        </div>
     </div>
 </nav>

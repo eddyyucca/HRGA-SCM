@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Inventory\asset_index_controller;
+use App\Http\Controllers\Inventory\asset_report_controller;
+use App\Http\Controllers\Inventory\asset_movement_controller;
 /*
 |--------------------------------------------------------------------------
 | Web Routes - GA System
@@ -11,9 +14,16 @@ use Illuminate\Support\Facades\Route;
 // Dashboard
 Route::get('/', fn() => redirect('/dashboard'));
 Route::get('/dashboard', fn() => view('dashboard'));
-Route::get('/transport', fn() => view('transport'));
-Route::get('/inventory', fn() => view('inventory'));
-Route::get('/kontrak', fn() => view('kontrak'));
+Route::get('/laporan/transport', fn() => view('transport'));
+Route::get('/laporan/inventory', fn() => view('inventory'));
+Route::get('/laporan/kontrak', fn() => view('kontrak'));
+
+// Travel Visitor
+Route::get('/travel_visitor', fn() => view('travel_visitor.index'));
+Route::get('/travel_visitor/create', fn() => view('travel_visitor.create'));
+Route::get('/travel_visitor/edit', fn() => view('travel_visitor.edit'));
+Route::get('/travel_visitor/report', fn() => view('travel_visitor.report'));
+
 
 // ============================================================================
 // TRANSPORT
@@ -52,6 +62,7 @@ Route::prefix('transport/driver')->group(function () {
 // ============================================================================
 // TRAVEL MANAGEMENT
 // ============================================================================
+
 
 // Ticketing
 Route::prefix('travel/ticketing')->group(function () {
@@ -150,6 +161,31 @@ Route::prefix('aset')->group(function () {
     Route::get('/maintenance/create', fn() => view('aset.maintenance.create'));
     Route::get('/maintenance/{id}', fn() => view('aset.maintenance.show'));
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| Inventory Asset Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('inventory/asset')->name('inventory.asset.')->group(function () {
+    
+    // Index & Detail
+    Route::get('/', [asset_index_controller::class, 'index'])->name('index');
+    Route::get('/show/{id}', [asset_index_controller::class, 'show'])->name('show');
+    
+    // Reports
+    Route::get('/report/same', [asset_report_controller::class, 'same_assets'])->name('same');
+    Route::get('/report/summary', [asset_report_controller::class, 'summary_by_location'])->name('summary');
+    Route::get('/location/{id}', [asset_report_controller::class, 'by_location'])->name('location');
+    
+    // Movement
+    Route::get('/movement', [asset_movement_controller::class, 'index'])->name('movement.index');
+    Route::get('/movement/history/{id}', [asset_movement_controller::class, 'history'])->name('movement.history');
+    
+});
+
 
 // ============================================================================
 // LAPORAN
