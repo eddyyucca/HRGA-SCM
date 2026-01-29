@@ -3,13 +3,16 @@
 @section('content')
 <div class="container-fluid">
     @if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
+    <div class="alert alert-success alert-dismissible">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
     @endif
 
     <div class="card mb-3">
         <div class="card-header"><h5>Filter & Pencarian</h5></div>
         <div class="card-body">
-            <form method="GET" class="row g-2">
+            <form method="GET" class="row g-2" id="filterForm">
                 <div class="col-md-3">
                     <input type="text" name="search" class="form-control" placeholder="Cari..." value="{{ request('search') }}">
                 </div>
@@ -53,16 +56,31 @@
 
     <div class="card">
         <div class="card-header">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between align-items-center">
                 <h5>Daftar Asset ({{ $assets->total() }})</h5>
                 <div>
-                    <a href="{{ route('inventory.asset.withdrawal.list') }}" class="btn btn-warning btn-sm">Barang Rusak</a>
-                    <a href="{{ route('inventory.asset.create') }}" class="btn btn-primary btn-sm">Tambah Asset</a>
+                    <div class="btn-group me-2">
+                        <button type="button" class="btn btn-success btn-sm" onclick="exportExcel()">
+                            <i class="bi bi-file-excel"></i> Excel
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="exportPdf()">
+                            <i class="bi bi-file-pdf"></i> PDF
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="printData()">
+                            <i class="bi bi-printer"></i> Print
+                        </button>
+                    </div>
+                    <a href="{{ route('inventory.asset.withdrawal.list') }}" class="btn btn-warning btn-sm me-2">
+                        <i class="bi bi-exclamation-triangle"></i> Barang Rusak
+                    </a>
+                    <a href="{{ route('inventory.asset.create') }}" class="btn btn-primary btn-sm">
+                        <i class="bi bi-plus-circle"></i> Tambah Asset
+                    </a>
                 </div>
             </div>
         </div>
         <div class="card-body">
-            <table class="table">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Nomor Asset</th>
@@ -78,19 +96,35 @@
                     @forelse($assets as $asset)
                     <tr>
                         <td><strong>{{ $asset->asset_number }}</strong></td>
-                        <td>{{ $asset->asset_name }}</td>
+                        <td>
+                            {{ $asset->asset_name }}
+                            @if($asset->photo)
+                            <br><small><i class="bi bi-image text-primary"></i> Ada foto</small>
+                            @endif
+                        </td>
                         <td>{{ $asset->category->name ?? '-' }}</td>
-                        <td>{{ $asset->location->full_location ?? '-' }}</td>
+                        <td>
+                            <small>{{ $asset->location->area ?? '-' }}</small><br>
+                            <strong>{{ $asset->location->building ?? '-' }} - {{ $asset->location->room ?? '-' }}</strong>
+                        </td>
                         <td><span class="badge bg-{{ $asset->condition_status == 'BAIK' ? 'success' : 'danger' }}">{{ $asset->condition_status }}</span></td>
                         <td><span class="badge bg-info">{{ $asset->operational_status }}</span></td>
                         <td>
-                            <a href="{{ route('inventory.asset.show', $asset->id) }}" class="btn btn-sm btn-info">Detail</a>
-                            <a href="{{ route('inventory.asset.edit', $asset->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                            <form action="{{ route('inventory.asset.destroy', $asset->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus?')">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-sm btn-danger">Hapus</button>
-                            </form>
+                            <div class="btn-group btn-group-sm">
+                                <a href="{{ route('inventory.asset.show', $asset->id) }}" class="btn btn-info" title="Detail">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="{{ route('inventory.asset.edit', $asset->id) }}" class="btn btn-warning" title="Edit">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <form action="{{ route('inventory.asset.destroy', $asset->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger" title="Hapus">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     @empty
@@ -98,8 +132,25 @@
                     @endforelse
                 </tbody>
             </table>
-            {{ $assets->links() }}
+            {{ $assets->appends(request()->query())->links() }}
         </div>
     </div>
 </div>
+
+<script>
+function exportExcel() {
+    const params = new URLSearchParams(new FormData(document.getElementById('filterForm')));
+    window.location.href = "{{ route('inventory.asset.export.excel') }}?" + params.toString();
+}
+
+function exportPdf() {
+    const params = new URLSearchParams(new FormData(document.getElementById('filterForm')));
+    window.location.href = "{{ route('inventory.asset.export.pdf') }}?" + params.toString();
+}
+
+function printData() {
+    const params = new URLSearchParams(new FormData(document.getElementById('filterForm')));
+    window.open("{{ route('inventory.asset.print') }}?" + params.toString(), '_blank');
+}
+</script>
 @endsection

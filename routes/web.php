@@ -1,10 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Inventory\AssetController;
 
-use App\Http\Controllers\Inventory\asset_index_controller;
-use App\Http\Controllers\Inventory\asset_report_controller;
-use App\Http\Controllers\Inventory\asset_movement_controller;
 /*
 |--------------------------------------------------------------------------
 | Web Routes - GA System
@@ -168,22 +166,36 @@ Route::prefix('aset')->group(function () {
 | Inventory Asset Routes
 |--------------------------------------------------------------------------
 */
-
 Route::prefix('inventory/asset')->name('inventory.asset.')->group(function () {
+    Route::get('/', [AssetController::class, 'index'])->name('index');
+    Route::get('/create', [AssetController::class, 'create'])->name('create');
+    Route::post('/', [AssetController::class, 'store'])->name('store');
+    Route::get('/{id}', [AssetController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [AssetController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [AssetController::class, 'update'])->name('update');
+    Route::delete('/{id}', [AssetController::class, 'destroy'])->name('destroy');
+    Route::get('/{id}/movement', [AssetController::class, 'movementForm'])->name('movement.form');
+    Route::post('/{id}/movement', [AssetController::class, 'movementStore'])->name('movement.store');
+    Route::get('/withdrawal/list', [AssetController::class, 'withdrawalList'])->name('withdrawal.list');
+    Route::post('/{id}/withdrawal', [AssetController::class, 'withdrawalStore'])->name('withdrawal.store');
+});
+
+// Di dalam group inventory.asset
+Route::get('/export/excel', [AssetController::class, 'exportExcel'])->name('export.excel');
+Route::get('/export/pdf', [AssetController::class, 'exportPdf'])->name('export.pdf');
+Route::get('/print', [AssetController::class, 'print'])->name('print');
+
+// Master Data (di luar group atau buat group baru)
+Route::prefix('inventory/master')->name('inventory.master.')->group(function () {
+    Route::get('/category', [MasterDataController::class, 'categoryIndex'])->name('category');
+    Route::post('/category', [MasterDataController::class, 'categoryStore'])->name('category.store');
+    Route::put('/category/{id}', [MasterDataController::class, 'categoryUpdate'])->name('category.update');
+    Route::delete('/category/{id}', [MasterDataController::class, 'categoryDestroy'])->name('category.destroy');
     
-    // Index & Detail
-    Route::get('/', [asset_index_controller::class, 'index'])->name('index');
-    Route::get('/show/{id}', [asset_index_controller::class, 'show'])->name('show');
-    
-    // Reports
-    Route::get('/report/same', [asset_report_controller::class, 'same_assets'])->name('same');
-    Route::get('/report/summary', [asset_report_controller::class, 'summary_by_location'])->name('summary');
-    Route::get('/location/{id}', [asset_report_controller::class, 'by_location'])->name('location');
-    
-    // Movement
-    Route::get('/movement', [asset_movement_controller::class, 'index'])->name('movement.index');
-    Route::get('/movement/history/{id}', [asset_movement_controller::class, 'history'])->name('movement.history');
-    
+    Route::get('/location', [MasterDataController::class, 'locationIndex'])->name('location');
+    Route::post('/location', [MasterDataController::class, 'locationStore'])->name('location.store');
+    Route::put('/location/{id}', [MasterDataController::class, 'locationUpdate'])->name('location.update');
+    Route::delete('/location/{id}', [MasterDataController::class, 'locationDestroy'])->name('location.destroy');
 });
 
 
