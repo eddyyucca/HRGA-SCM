@@ -180,45 +180,44 @@
                     </ul>
                 </li>
 
-                <!-- Header: Inventory -->
-                <li class="nav-header" style="color: #6c757d; font-weight: 600; font-size: 0.75rem; padding: 0.5rem 1rem; margin-top: 0.5rem;">INVENTORY</li>
+                <!-- Header: Asset -->
+          
+    <li class="nav-header">SPACE OPS</li>
 
-                <!-- Asset Management (NEW) -->
-                <li class="nav-item {{ request()->is('inventory/asset*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->is('inventory/asset*') ? 'active' : '' }}" style="color: #495057;">
-                        <i class="nav-icon bi bi-boxes" style="color: #667eea;"></i>
-                        <p>
-                            Asset Management
-                            <i class="nav-arrow bi bi-chevron-right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ url('/inventory/asset') }}" class="nav-link {{ request()->is('inventory/asset') && !request()->is('inventory/asset/*') ? 'active' : '' }}" style="color: #6c757d;">
-                                <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
-                                <p>Data Asset</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/inventory/asset/report/same') }}" class="nav-link {{ request()->is('inventory/asset/report/same') ? 'active' : '' }}" style="color: #6c757d;">
-                                <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
-                                <p>Asset Yang Sama</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/inventory/asset/report/summary') }}" class="nav-link {{ request()->is('inventory/asset/report/summary') ? 'active' : '' }}" style="color: #6c757d;">
-                                <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
-                                <p>Summary Lokasi</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/inventory/asset/movement') }}" class="nav-link {{ request()->is('inventory/asset/movement*') ? 'active' : '' }}" style="color: #6c757d;">
-                                <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
-                                <p>Perpindahan</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+<li class="nav-item">
+  <a href="{{ route('spaceops.dashboard') }}" class="nav-link">
+    <i class="nav-icon fas fa-tachometer-alt"></i>
+    <p>SpaceOps Dashboard</p>
+  </a>
+</li>
+
+<li class="nav-item">
+  <a href="{{ route('spaceops.spaces') }}" class="nav-link">
+    <i class="nav-icon fas fa-building"></i>
+    <p>Master Spaces</p>
+  </a>
+</li>
+
+<li class="nav-item">
+  <a href="{{ route('spaceops.rooming') }}" class="nav-link">
+    <i class="nav-icon fas fa-bed"></i>
+    <p>Rooming</p>
+  </a>
+</li>
+
+<li class="nav-item">
+  <a href="{{ route('spaceops.rooming.vacant') }}" class="nav-link">
+    <i class="nav-icon fas fa-door-open"></i>
+    <p>Vacant Beds</p>
+  </a>
+</li>
+
+<li class="nav-item">
+  <a href="{{ route('spaceops.assets') }}" class="nav-link">
+    <i class="nav-icon fas fa-boxes"></i>
+    <p>Space Assets</p>
+  </a>
+</li>
 
                 <!-- Barang (Existing) -->
                 <li class="nav-item {{ request()->is('inventory/barang*') || request()->is('inventory/kategori*') || request()->is('inventory/masuk*') || request()->is('inventory/keluar*') || request()->is('inventory/opname*') ? 'menu-open' : '' }}">

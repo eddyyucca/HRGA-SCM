@@ -1,7 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Inventory\AssetController;
+use App\Http\Controllers\SpaceOps\DashboardController;
+use App\Http\Controllers\SpaceOps\SpaceMasterController;
+use App\Http\Controllers\SpaceOps\RoomingController;
+use App\Http\Controllers\SpaceOps\SpaceAssetController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -143,59 +147,18 @@ Route::prefix('inventory')->group(function () {
 // ASET
 // ============================================================================
 
-Route::prefix('aset')->group(function () {
-    Route::get('/', fn() => view('aset.index'));
-    Route::get('/create', fn() => view('aset.create'));
-    Route::get('/{id}', fn() => view('aset.show'));
-    Route::get('/{id}/edit', fn() => view('aset.edit'));
-    
-    // Peminjaman Aset
-    Route::get('/peminjaman', fn() => view('aset.peminjaman.index'));
-    Route::get('/peminjaman/create', fn() => view('aset.peminjaman.create'));
-    Route::get('/peminjaman/{id}', fn() => view('aset.peminjaman.show'));
-    
-    // Maintenance Aset
-    Route::get('/maintenance', fn() => view('aset.maintenance.index'));
-    Route::get('/maintenance/create', fn() => view('aset.maintenance.create'));
-    Route::get('/maintenance/{id}', fn() => view('aset.maintenance.show'));
-});
 
+Route::prefix('spaceops')->group(function () {
 
-/*
-|--------------------------------------------------------------------------
-| Inventory Asset Routes
-|--------------------------------------------------------------------------
-*/
-Route::prefix('inventory/asset')->name('inventory.asset.')->group(function () {
-    Route::get('/', [AssetController::class, 'index'])->name('index');
-    Route::get('/create', [AssetController::class, 'create'])->name('create');
-    Route::post('/', [AssetController::class, 'store'])->name('store');
-    Route::get('/{id}', [AssetController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [AssetController::class, 'edit'])->name('edit');
-    Route::put('/{id}', [AssetController::class, 'update'])->name('update');
-    Route::delete('/{id}', [AssetController::class, 'destroy'])->name('destroy');
-    Route::get('/{id}/movement', [AssetController::class, 'movementForm'])->name('movement.form');
-    Route::post('/{id}/movement', [AssetController::class, 'movementStore'])->name('movement.store');
-    Route::get('/withdrawal/list', [AssetController::class, 'withdrawalList'])->name('withdrawal.list');
-    Route::post('/{id}/withdrawal', [AssetController::class, 'withdrawalStore'])->name('withdrawal.store');
-});
+    Route::get('/', [DashboardController::class, 'index'])->name('spaceops.dashboard');
 
-// Di dalam group inventory.asset
-Route::get('/export/excel', [AssetController::class, 'exportExcel'])->name('export.excel');
-Route::get('/export/pdf', [AssetController::class, 'exportPdf'])->name('export.pdf');
-Route::get('/print', [AssetController::class, 'print'])->name('print');
+    Route::get('/spaces', [SpaceMasterController::class, 'spaces'])->name('spaceops.spaces');
 
-// Master Data (di luar group atau buat group baru)
-Route::prefix('inventory/master')->name('inventory.master.')->group(function () {
-    Route::get('/category', [MasterDataController::class, 'categoryIndex'])->name('category');
-    Route::post('/category', [MasterDataController::class, 'categoryStore'])->name('category.store');
-    Route::put('/category/{id}', [MasterDataController::class, 'categoryUpdate'])->name('category.update');
-    Route::delete('/category/{id}', [MasterDataController::class, 'categoryDestroy'])->name('category.destroy');
-    
-    Route::get('/location', [MasterDataController::class, 'locationIndex'])->name('location');
-    Route::post('/location', [MasterDataController::class, 'locationStore'])->name('location.store');
-    Route::put('/location/{id}', [MasterDataController::class, 'locationUpdate'])->name('location.update');
-    Route::delete('/location/{id}', [MasterDataController::class, 'locationDestroy'])->name('location.destroy');
+    Route::get('/rooming', [RoomingController::class, 'index'])->name('spaceops.rooming');
+    Route::get('/rooming/vacant', [RoomingController::class, 'vacant'])->name('spaceops.rooming.vacant');
+
+    Route::get('/space-assets', [SpaceAssetController::class, 'index'])->name('spaceops.assets');
+
 });
 
 
