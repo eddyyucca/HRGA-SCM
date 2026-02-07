@@ -1,11 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SpaceOps\DashboardController;
-use App\Http\Controllers\SpaceOps\SpaceMasterController;
-use App\Http\Controllers\SpaceOps\RoomingController;
-use App\Http\Controllers\SpaceOps\SpaceAssetController;
+// use App\Http\Controllers\SpaceOps\DashboardController;
+// use App\Http\Controllers\SpaceOps\SpaceMasterController;
+// use App\Http\Controllers\SpaceOps\RoomingController;
+// use App\Http\Controllers\SpaceOps\SpaceAssetController;
 
+use App\Http\Controllers\Mess\DashboardController;
+use App\Http\Controllers\Mess\OccupancyController;
+use App\Http\Controllers\Mess\AssetController;
+use App\Http\Controllers\Mess\RoomAvailabilityController;
+use App\Http\Controllers\Mess\HotbedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -148,18 +153,28 @@ Route::prefix('inventory')->group(function () {
 // ============================================================================
 
 
-Route::prefix('spaceops')->group(function () {
+Route::prefix('mess')->name('mess.')->group(function () {
+    // Dashboard
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/', [DashboardController::class, 'index'])->name('spaceops.dashboard');
+    // Occupancy / Hunian
+    Route::get('/occupancy', [OccupancyController::class, 'index'])->name('occupancy.index');
+    Route::get('/occupancy/room/{roomId}', [OccupancyController::class, 'byRoom'])->name('occupancy.room');
 
-    Route::get('/spaces', [SpaceMasterController::class, 'spaces'])->name('spaceops.spaces');
+    // Assets
+    Route::get('/assets', [AssetController::class, 'index'])->name('assets.index');
+    Route::get('/assets/location/{area}/{building?}/{room?}', [AssetController::class, 'byLocation'])->name('assets.location');
 
-    Route::get('/rooming', [RoomingController::class, 'index'])->name('spaceops.rooming');
-    Route::get('/rooming/vacant', [RoomingController::class, 'vacant'])->name('spaceops.rooming.vacant');
+    // Room Availability
+    Route::get('/rooms', [RoomAvailabilityController::class, 'index'])->name('rooms.index');
+    Route::get('/rooms/new-hire', [RoomAvailabilityController::class, 'forNewHire'])->name('rooms.newhire');
+    Route::get('/rooms/visitor', [RoomAvailabilityController::class, 'forVisitor'])->name('rooms.visitor');
 
-    Route::get('/space-assets', [SpaceAssetController::class, 'index'])->name('spaceops.assets');
-
+    // Hotbed
+    Route::get('/hotbed', [HotbedController::class, 'index'])->name('hotbed.index');
+    Route::get('/hotbed/available', [HotbedController::class, 'available'])->name('hotbed.available');
 });
+
 
 
 // ============================================================================

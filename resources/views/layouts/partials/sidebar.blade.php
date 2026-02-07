@@ -20,6 +20,100 @@
                     </a>
                 </li>
 
+                <!-- Header: Mess Management -->
+                <li class="nav-header" style="color: #6c757d; font-weight: 600; font-size: 0.75rem; padding: 0.5rem 1rem; margin-top: 0.5rem;">MESS MANAGEMENT</li>
+
+                <!-- Mess Dashboard -->
+                <li class="nav-item">
+                    <a href="{{ route('mess.dashboard') }}" class="nav-link {{ request()->is('mess') ? 'active' : '' }}" style="color: #495057;">
+                        <i class="nav-icon bi bi-house-door" style="color: #667eea;"></i>
+                        <p>Mess Dashboard</p>
+                    </a>
+                </li>
+
+                <!-- Hunian Mess -->
+                <li class="nav-item {{ request()->is('mess/occupancy*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('mess/occupancy*') ? 'active' : '' }}" style="color: #495057;">
+                        <i class="nav-icon bi bi-people" style="color: #667eea;"></i>
+                        <p>
+                            Hunian Mess
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('mess.occupancy.index') }}" class="nav-link {{ request()->is('mess/occupancy') ? 'active' : '' }}" style="color: #6c757d;">
+                                <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
+                                <p>Data Penghuni</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Room Availability -->
+                <li class="nav-item {{ request()->is('mess/rooms*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('mess/rooms*') ? 'active' : '' }}" style="color: #495057;">
+                        <i class="nav-icon bi bi-door-open" style="color: #667eea;"></i>
+                        <p>
+                            Kamar
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('mess.rooms.index') }}" class="nav-link {{ request()->is('mess/rooms') ? 'active' : '' }}" style="color: #6c757d;">
+                                <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
+                                <p>Ketersediaan Kamar</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('mess.rooms.newhire') }}" class="nav-link {{ request()->is('mess/rooms/new-hire') ? 'active' : '' }}" style="color: #6c757d;">
+                                <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
+                                <p>Untuk New Hire</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('mess.rooms.visitor') }}" class="nav-link {{ request()->is('mess/rooms/visitor') ? 'active' : '' }}" style="color: #6c757d;">
+                                <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
+                                <p>Untuk Visitor</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Hotbed -->
+                <li class="nav-item {{ request()->is('mess/hotbed*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('mess/hotbed*') ? 'active' : '' }}" style="color: #495057;">
+                        <i class="nav-icon bi bi-arrow-left-right" style="color: #667eea;"></i>
+                        <p>
+                            Hotbed
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('mess.hotbed.index') }}" class="nav-link {{ request()->is('mess/hotbed') ? 'active' : '' }}" style="color: #6c757d;">
+                                <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
+                                <p>Kelola Hotbed</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('mess.hotbed.available') }}" class="nav-link {{ request()->is('mess/hotbed/available') ? 'active' : '' }}" style="color: #6c757d;">
+                                <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
+                                <p>Bed Tersedia</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Assets Mess -->
+                <li class="nav-item">
+                    <a href="{{ route('mess.assets.index') }}" class="nav-link {{ request()->is('mess/assets*') ? 'active' : '' }}" style="color: #495057;">
+                        <i class="nav-icon bi bi-box-seam" style="color: #667eea;"></i>
+                        <p>Inventaris Asset</p>
+                    </a>
+                </li>
+
                 <!-- Header: Transport -->
                 <li class="nav-header" style="color: #6c757d; font-weight: 600; font-size: 0.75rem; padding: 0.5rem 1rem; margin-top: 0.5rem;">TRANSPORT</li>
 
@@ -127,99 +221,55 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ url('/travel/visitor/checkin') }}" class="nav-link {{ request()->is('travel/visitor/checkin*') ? 'active' : '' }}" style="color: #6c757d;">
-                                <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
-                                <p>Check In</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a href="{{ url('/travel/visitor/register') }}" class="nav-link {{ request()->is('travel/visitor/register*') ? 'active' : '' }}" style="color: #6c757d;">
                                 <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
-                                <p>Registrasi Tamu</p>
+                                <p>Registrasi</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/travel/visitor/log') }}" class="nav-link {{ request()->is('travel/visitor/log*') ? 'active' : '' }}" style="color: #6c757d;">
+                            <a href="{{ url('/travel/visitor/list') }}" class="nav-link {{ request()->is('travel/visitor/list*') ? 'active' : '' }}" style="color: #6c757d;">
                                 <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
-                                <p>Log Kunjungan</p>
+                                <p>Daftar Visitor</p>
                             </a>
                         </li>
                     </ul>
                 </li>
 
-                <!-- Header: Kontrak -->
-                <li class="nav-header" style="color: #6c757d; font-weight: 600; font-size: 0.75rem; padding: 0.5rem 1rem; margin-top: 0.5rem;">KONTRAK</li>
+                <!-- Header: Inventory -->
+                <li class="nav-header" style="color: #6c757d; font-weight: 600; font-size: 0.75rem; padding: 0.5rem 1rem; margin-top: 0.5rem;">INVENTORY</li>
 
-                <li class="nav-item {{ request()->is('kontrak*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->is('kontrak*') ? 'active' : '' }}" style="color: #495057;">
-                        <i class="nav-icon bi bi-file-earmark-text" style="color: #667eea;"></i>
+                <!-- Asset -->
+                <li class="nav-item {{ request()->is('inventory/asset*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('inventory/asset*') ? 'active' : '' }}" style="color: #495057;">
+                        <i class="nav-icon bi bi-archive" style="color: #667eea;"></i>
                         <p>
-                            Manajemen Kontrak
+                            Asset
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ url('/kontrak') }}" class="nav-link {{ request()->is('kontrak') && !request()->is('kontrak/*') ? 'active' : '' }}" style="color: #6c757d;">
+                            <a href="{{ url('/inventory/asset') }}" class="nav-link {{ request()->is('inventory/asset') ? 'active' : '' }}" style="color: #6c757d;">
                                 <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
-                                <p>Daftar Kontrak</p>
+                                <p>Data Asset</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/kontrak/vendor') }}" class="nav-link {{ request()->is('kontrak/vendor*') ? 'active' : '' }}" style="color: #6c757d;">
+                            <a href="{{ url('/inventory/asset/location') }}" class="nav-link {{ request()->is('inventory/asset/location*') ? 'active' : '' }}" style="color: #6c757d;">
                                 <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
-                                <p>Data Vendor</p>
+                                <p>Summary Lokasi</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/kontrak/reminder') }}" class="nav-link {{ request()->is('kontrak/reminder*') ? 'active' : '' }}" style="color: #6c757d;">
+                            <a href="{{ url('/inventory/asset/movement') }}" class="nav-link {{ request()->is('inventory/asset/movement*') ? 'active' : '' }}" style="color: #6c757d;">
                                 <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
-                                <p>Reminder</p>
+                                <p>Perpindahan</p>
                             </a>
                         </li>
                     </ul>
                 </li>
 
-                <!-- Header: Asset -->
-          
-    <li class="nav-header">SPACE OPS</li>
-
-<li class="nav-item">
-  <a href="{{ route('spaceops.dashboard') }}" class="nav-link">
-    <i class="nav-icon fas fa-tachometer-alt"></i>
-    <p>SpaceOps Dashboard</p>
-  </a>
-</li>
-
-<li class="nav-item">
-  <a href="{{ route('spaceops.spaces') }}" class="nav-link">
-    <i class="nav-icon fas fa-building"></i>
-    <p>Master Spaces</p>
-  </a>
-</li>
-
-<li class="nav-item">
-  <a href="{{ route('spaceops.rooming') }}" class="nav-link">
-    <i class="nav-icon fas fa-bed"></i>
-    <p>Rooming</p>
-  </a>
-</li>
-
-<li class="nav-item">
-  <a href="{{ route('spaceops.rooming.vacant') }}" class="nav-link">
-    <i class="nav-icon fas fa-door-open"></i>
-    <p>Vacant Beds</p>
-  </a>
-</li>
-
-<li class="nav-item">
-  <a href="{{ route('spaceops.assets') }}" class="nav-link">
-    <i class="nav-icon fas fa-boxes"></i>
-    <p>Space Assets</p>
-  </a>
-</li>
-
-                <!-- Barang (Existing) -->
+                <!-- Barang -->
                 <li class="nav-item {{ request()->is('inventory/barang*') || request()->is('inventory/kategori*') || request()->is('inventory/masuk*') || request()->is('inventory/keluar*') || request()->is('inventory/opname*') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->is('inventory/barang*') || request()->is('inventory/kategori*') || request()->is('inventory/masuk*') || request()->is('inventory/keluar*') || request()->is('inventory/opname*') ? 'active' : '' }}" style="color: #495057;">
                         <i class="nav-icon bi bi-box-seam" style="color: #667eea;"></i>
