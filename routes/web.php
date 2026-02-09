@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-// use App\Http\Controllers\SpaceOps\DashboardController;
-// use App\Http\Controllers\SpaceOps\SpaceMasterController;
-// use App\Http\Controllers\SpaceOps\RoomingController;
-// use App\Http\Controllers\SpaceOps\SpaceAssetController;
+// Inventory
+use App\Http\Controllers\Inventory\InventoryDashboardController;
+use App\Http\Controllers\Inventory\InventoryItemController;
+use App\Http\Controllers\Inventory\InventoryTransactionController;
 
+// Mess dan Asset 
 use App\Http\Controllers\Mess\DashboardController;
 use App\Http\Controllers\Mess\OccupancyController;
 use App\Http\Controllers\Mess\AssetController;
@@ -119,33 +120,17 @@ Route::prefix('travel/visitor')->group(function () {
 // ============================================================================
 // INVENTORY
 // ============================================================================
-
-// Barang
-Route::prefix('inventory')->group(function () {
-    Route::get('/barang', fn() => view('inventory.barang.index'));
-    Route::get('/barang/create', fn() => view('inventory.barang.create'));
-    Route::get('/barang/{id}', fn() => view('inventory.barang.show'));
-    Route::get('/barang/{id}/edit', fn() => view('inventory.barang.edit'));
+Route::prefix('inventory')->name('inventory.')->group(function () {
     
-    // Kategori
-    Route::get('/kategori', fn() => view('inventory.kategori.index'));
-    Route::get('/kategori/create', fn() => view('inventory.kategori.create'));
-    Route::get('/kategori/{id}/edit', fn() => view('inventory.kategori.edit'));
+    // Dashboard
+    Route::get('/', [InventoryDashboardController::class, 'index'])->name('dashboard');
     
-    // Barang Masuk
-    Route::get('/masuk', fn() => view('inventory.masuk.index'));
-    Route::get('/masuk/create', fn() => view('inventory.masuk.create'));
-    Route::get('/masuk/{id}', fn() => view('inventory.masuk.show'));
+    // Items
+    Route::resource('items', InventoryItemController::class);
     
-    // Barang Keluar
-    Route::get('/keluar', fn() => view('inventory.keluar.index'));
-    Route::get('/keluar/create', fn() => view('inventory.keluar.create'));
-    Route::get('/keluar/{id}', fn() => view('inventory.keluar.show'));
+    // Transactions
+    Route::resource('transactions', InventoryTransactionController::class)->only(['index', 'create', 'store', 'show']);
     
-    // Stock Opname
-    Route::get('/opname', fn() => view('inventory.opname.index'));
-    Route::get('/opname/create', fn() => view('inventory.opname.create'));
-    Route::get('/opname/{id}', fn() => view('inventory.opname.show'));
 });
 
 // ============================================================================

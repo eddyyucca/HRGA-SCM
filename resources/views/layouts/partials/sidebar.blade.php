@@ -269,44 +269,59 @@
                     </ul>
                 </li>
 
-                <!-- Barang -->
-                <li class="nav-item {{ request()->is('inventory/barang*') || request()->is('inventory/kategori*') || request()->is('inventory/masuk*') || request()->is('inventory/keluar*') || request()->is('inventory/opname*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->is('inventory/barang*') || request()->is('inventory/kategori*') || request()->is('inventory/masuk*') || request()->is('inventory/keluar*') || request()->is('inventory/opname*') ? 'active' : '' }}" style="color: #495057;">
+                <!-- Inventory GA Dashboard -->
+                <li class="nav-item">
+                    <a href="{{ route('inventory.dashboard') }}" class="nav-link {{ request()->is('inventory') && !request()->is('inventory/*') ? 'active' : '' }}" style="color: #495057;">
+                        <i class="nav-icon bi bi-grid-3x3-gap" style="color: #667eea;"></i>
+                        <p>Inventory Dashboard</p>
+                    </a>
+                </li>
+
+                <!-- Items Management -->
+                <li class="nav-item {{ request()->is('inventory/items*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('inventory/items*') ? 'active' : '' }}" style="color: #495057;">
                         <i class="nav-icon bi bi-box-seam" style="color: #667eea;"></i>
                         <p>
-                            Barang
+                            Items
                             <i class="nav-arrow bi bi-chevron-right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ url('/inventory/barang') }}" class="nav-link {{ request()->is('inventory/barang') ? 'active' : '' }}" style="color: #6c757d;">
+                            <a href="{{ route('inventory.items.index') }}" class="nav-link {{ request()->is('inventory/items') ? 'active' : '' }}" style="color: #6c757d;">
                                 <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
-                                <p>Data Barang</p>
+                                <p>All Items</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/inventory/kategori') }}" class="nav-link {{ request()->is('inventory/kategori*') ? 'active' : '' }}" style="color: #6c757d;">
+                            <a href="{{ route('inventory.items.create') }}" class="nav-link {{ request()->is('inventory/items/create') ? 'active' : '' }}" style="color: #6c757d;">
                                 <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
-                                <p>Kategori</p>
+                                <p>Add New Item</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Transactions (IN/OUT) -->
+                <li class="nav-item {{ request()->is('inventory/transactions*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('inventory/transactions*') ? 'active' : '' }}" style="color: #495057;">
+                        <i class="nav-icon bi bi-arrow-left-right" style="color: #667eea;"></i>
+                        <p>
+                            Transactions
+                            <i class="nav-arrow bi bi-chevron-right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('inventory.transactions.index') }}" class="nav-link {{ request()->is('inventory/transactions') ? 'active' : '' }}" style="color: #6c757d;">
+                                <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
+                                <p>All Transactions</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/inventory/masuk') }}" class="nav-link {{ request()->is('inventory/masuk*') ? 'active' : '' }}" style="color: #6c757d;">
+                            <a href="{{ route('inventory.transactions.create') }}" class="nav-link {{ request()->is('inventory/transactions/create') ? 'active' : '' }}" style="color: #6c757d;">
                                 <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
-                                <p>Barang Masuk</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/inventory/keluar') }}" class="nav-link {{ request()->is('inventory/keluar*') ? 'active' : '' }}" style="color: #6c757d;">
-                                <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
-                                <p>Barang Keluar</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/inventory/opname') }}" class="nav-link {{ request()->is('inventory/opname*') ? 'active' : '' }}" style="color: #6c757d;">
-                                <i class="nav-icon bi bi-circle" style="font-size: 0.5rem;"></i>
-                                <p>Stock Opname</p>
+                                <p>New Transaction</p>
                             </a>
                         </li>
                     </ul>
