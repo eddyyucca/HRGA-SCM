@@ -10,7 +10,7 @@ class Area extends Model
     protected $table = 'mst_areas';
 
     protected $fillable = [
-        'code', 'name', 'type', 'description', 'is_active'
+        'code', 'name', 'description', 'is_active'
     ];
 
     protected $casts = [

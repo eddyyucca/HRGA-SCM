@@ -11,7 +11,7 @@ class Room extends Model
     protected $table = 'mst_rooms';
 
     protected $fillable = [
-        'building_id', 'room_no', 'name', 'floor', 'capacity', 
+        'floor_id', 'room_no', 'name', 'capacity', 
         'room_type', 'status', 'description', 'is_active'
     ];
 
@@ -19,9 +19,19 @@ class Room extends Model
         'is_active' => 'boolean'
     ];
 
-    public function building(): BelongsTo
+    public function floor(): BelongsTo
     {
-        return $this->belongsTo(Building::class, 'building_id');
+        return $this->belongsTo(Floor::class, 'floor_id');
+    }
+
+    public function building()
+    {
+        return $this->floor->building;
+    }
+
+    public function area()
+    {
+        return $this->floor->building->area;
     }
 
     public function assets(): HasMany
@@ -41,7 +51,10 @@ class Room extends Model
 
     public function getFullCodeAttribute(): string
     {
-        return $this->building->area->code . '-' . $this->building->code . '-' . $this->room_no;
+        $floor = $this->floor;
+        $building = $floor->building;
+        $area = $building->area;
+        return $area->code . '-' . $building->code . '-L' . $floor->floor_number . '-' . $this->room_no;
     }
 
     public function getAvailableBedsAttribute(): int

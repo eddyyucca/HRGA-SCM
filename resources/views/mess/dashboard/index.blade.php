@@ -64,6 +64,7 @@
                                 <tr>
                                     <th>Area</th>
                                     <th>Building</th>
+                                    <th>Lantai</th>
                                     <th>Room No</th>
                                     <th>Type</th>
                                     <th>Capacity</th>
@@ -78,6 +79,7 @@
                                 <tr>
                                     <td>{{ $room->area_name }}</td>
                                     <td>{{ $room->building_name }}</td>
+                                    <td>{{ $room->floor_number }}</td>
                                     <td><strong>{{ $room->room_no }}</strong></td>
                                     <td><span class="badge bg-secondary">{{ $room->room_type }}</span></td>
                                     <td>{{ $room->capacity }}</td>
@@ -106,7 +108,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="9" class="text-center">No data available</td>
+                                    <td colspan="10" class="text-center">No data available</td>
                                 </tr>
                                 @endforelse
                             </tbody>

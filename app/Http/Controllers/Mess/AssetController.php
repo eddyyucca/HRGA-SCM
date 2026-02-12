@@ -7,17 +7,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Mess\Asset;
 use App\Models\Mess\Area;
+use App\Models\Mess\Building;
 
 class AssetController extends Controller
 {
     public function index(Request $request)
     {
         $areas = Area::where('is_active', true)->get();
+        $buildingTypes = ['MESS', 'OFFICE', 'KANTIN', 'WORKSHOP', 'GUDANG', 'LAINNYA'];
         
         $query = DB::table('vw_asset_details');
 
         if ($request->filled('area')) {
             $query->where('area_code', $request->area);
+        }
+        if ($request->filled('building_type')) {
+            $query->where('building_type', $request->building_type);
         }
         if ($request->filled('building')) {
             $query->where('building_code', $request->building);
@@ -36,12 +41,29 @@ class AssetController extends Controller
             });
         }
 
-        $assets = $query->orderBy('area_code')
+        $assets = $query->orderBy('building_type')
+            ->orderBy('area_code')
             ->orderBy('building_code')
             ->orderBy('room_no')
             ->paginate(20);
 
-        return view('mess.asset.index', compact('assets', 'areas'));
+        // Summary per building type
+        $assetSummary = DB::table('vw_asset_summary')->get();
+
+        return view('mess.asset.index', compact('assets', 'areas', 'buildingTypes', 'assetSummary'));
+    }
+
+    public function byBuilding($buildingType = null)
+    {
+        $query = DB::table('vw_asset_summary');
+        
+        if ($buildingType) {
+            $query->where('building_type', $buildingType);
+        }
+
+        $buildings = $query->get();
+        
+        return view('mess.asset.by-building', compact('buildings', 'buildingType'));
     }
 
     public function byLocation($areaCode, $buildingCode = null, $roomNo = null)

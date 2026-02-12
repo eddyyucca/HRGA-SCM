@@ -22,9 +22,9 @@
             <div class="card bg-primary text-white">
                 <div class="card-body">
                     <h4><i class="bi bi-door-open me-2"></i>{{ $room->full_code }}</h4>
-                    <p class="mb-1"><strong>Area:</strong> {{ $room->building->area->name }}</p>
-                    <p class="mb-1"><strong>Building:</strong> {{ $room->building->name }}</p>
-                    <p class="mb-1"><strong>Lantai:</strong> {{ $room->floor }}</p>
+                    <p class="mb-1"><strong>Area:</strong> {{ $room->floor->building->area->name }}</p>
+                    <p class="mb-1"><strong>Building:</strong> {{ $room->floor->building->name }}</p>
+                    <p class="mb-1"><strong>Lantai:</strong> {{ $room->floor->display_name }}</p>
                     <p class="mb-0"><strong>Type:</strong> {{ $room->room_type }}</p>
                 </div>
             </div>

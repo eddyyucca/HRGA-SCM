@@ -11,13 +11,15 @@ class RoomAvailabilityController extends Controller
 {
     public function index(Request $request)
     {
-        $areas = Area::where('is_active', true)->where('type', 'MESS')->get();
+        $areas = Area::where('is_active', true)->get();
         
-        $query = DB::table('vw_room_availability')
-            ->where('room_type', '!=', 'OFFICE');
+        $query = DB::table('vw_room_availability');
 
         if ($request->filled('area')) {
             $query->where('area_code', $request->area);
+        }
+        if ($request->filled('building')) {
+            $query->where('building_code', $request->building);
         }
         if ($request->filled('only_available')) {
             $query->where('available_beds', '>', 0);

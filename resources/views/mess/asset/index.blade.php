@@ -10,17 +10,31 @@
         </div>
     </div>
 
+    <!-- Summary Cards per Building Type -->
+    <div class="row mb-4">
+        @foreach($assetSummary->groupBy('building_type') as $type => $buildings)
+        <div class="col-md-4 col-lg-2 mb-2">
+            <div class="card {{ $type == 'MESS' ? 'bg-primary' : ($type == 'OFFICE' ? 'bg-info' : ($type == 'KANTIN' ? 'bg-warning' : 'bg-secondary')) }} text-white">
+                <div class="card-body py-2">
+                    <h6 class="mb-1">{{ $type }}</h6>
+                    <small>{{ $buildings->sum('total_assets') }} items</small>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+
     <!-- Filter -->
     <div class="card mb-4">
         <div class="card-body">
             <form method="GET" class="row g-3">
                 <div class="col-md-2">
-                    <label class="form-label">Area</label>
-                    <select name="area" class="form-select">
-                        <option value="">Semua Area</option>
-                        @foreach($areas as $area)
-                            <option value="{{ $area->code }}" {{ request('area') == $area->code ? 'selected' : '' }}>
-                                {{ $area->name }}
+                    <label class="form-label">Tipe Building</label>
+                    <select name="building_type" class="form-select">
+                        <option value="">Semua Tipe</option>
+                        @foreach($buildingTypes as $type)
+                            <option value="{{ $type }}" {{ request('building_type') == $type ? 'selected' : '' }}>
+                                {{ $type }}
                             </option>
                         @endforeach
                     </select>
@@ -56,24 +70,33 @@
                 <table class="table table-striped table-hover">
                     <thead class="table-dark">
                         <tr>
-                            <th>Location</th>
+                            <th>Tipe</th>
+                            <th>Building</th>
                             <th>Room</th>
                             <th>Item Name</th>
                             <th>Category</th>
                             <th>Qty</th>
-                            <th>Unit</th>
                             <th>Condition</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($assets as $asset)
                         <tr>
-                            <td>{{ $asset->area_name }} - {{ $asset->building_name }}</td>
-                            <td><strong>{{ $asset->room_no }}</strong></td>
+                            <td>
+                                <span class="badge {{ $asset->building_type == 'MESS' ? 'bg-primary' : ($asset->building_type == 'OFFICE' ? 'bg-info' : ($asset->building_type == 'KANTIN' ? 'bg-warning' : 'bg-secondary')) }}">
+                                    {{ $asset->building_type }}
+                                </span>
+                            </td>
+                            <td>{{ $asset->building_name }}</td>
+                            <td>
+                                <strong>{{ $asset->room_no }}</strong>
+                                @if($asset->room_name)
+                                    <br><small class="text-muted">{{ $asset->room_name }}</small>
+                                @endif
+                            </td>
                             <td>{{ $asset->item_name }}</td>
                             <td>{{ $asset->category }}</td>
                             <td class="text-center">{{ $asset->qty }}</td>
-                            <td>{{ $asset->unit }}</td>
                             <td>
                                 @if($asset->condition == 'BAIK')
                                     <span class="badge bg-success">BAIK</span>
